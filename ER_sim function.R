@@ -55,14 +55,14 @@ graph_mc_sim <- function(graph, sim = 5000){
   )
   
   # Unlist and change to a data frame for vizualizations
-  gl.pl <- as.data.frame(unlist(gl.pl))
-  gl.trans <- as.data.frame(unlist(gl.trans))
-  gl.density <- as.data.frame(unlist(gl.density))
-  gl.degree <- as.data.frame(unlist(gl.degree))
+  gl.pl <- as_tibble(unlist(gl.pl))
+  gl.trans <- as_tibble(unlist(gl.trans))
+  gl.density <- as_tibble(unlist(gl.density))
+  gl.degree <- as_tibble(unlist(gl.degree))
   
   # Plot the distribution of random graph's average shortest path lengths with the 
   # input graphs's ave. shortest path as line
-  p.gl.pl <- ggplot(gl.pl, aes(x = gl.pl)) + 
+  p.gl.pl <- ggplot(gl.pl, aes(x = value)) + 
     geom_histogram(aes(y = ..density..)) + 
     geom_vline(xintercept = (mean_distance(graph, directed = TRUE)), linetype = "dashed", color = "red") +
     geom_density() +
@@ -72,7 +72,7 @@ graph_mc_sim <- function(graph, sim = 5000){
   
   # Plot the distribution of random graph's transitivity with the input graph's 
   # transitivity path as line
-  p.gl.trans <- ggplot(gl.trans, aes(x = gl.trans)) + 
+  p.gl.trans <- ggplot(gl.trans, aes(x = value)) + 
     geom_histogram(aes(y = ..density..)) + 
     geom_vline(xintercept = (transitivity(graph)), linetype = "dashed", color = "red") +
     geom_density() +
@@ -82,7 +82,7 @@ graph_mc_sim <- function(graph, sim = 5000){
   
   # Plot the distribution of random graph's average density with the input graph's 
   # denisty as line
-  p.gl.density <- ggplot(gl.density, aes(x = gl.density)) + 
+  p.gl.density <- ggplot(gl.density, aes(x = value)) + 
     geom_histogram(aes(y = ..density..)) + 
     geom_vline(xintercept = (edge_density(graph)), linetype = "dashed", color = "red") +
     geom_density() +
@@ -92,7 +92,7 @@ graph_mc_sim <- function(graph, sim = 5000){
   
   # Plot the distribution of random graph's mean degree with the input graph's mean 
   # degree path as line
-  p.gl.degree <- ggplot(gl.degree, aes(x = gl.degree)) + 
+  p.gl.degree <- ggplot(gl.degree, aes(x = value)) + 
     geom_histogram(aes(y = ..density..), bins = 10) + 
     geom_vline(xintercept = (mean(degree(graph, mode = "all"))), linetype = "dashed", color = "red") +
     geom_density() +
